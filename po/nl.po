@@ -1,0 +1,324 @@
+# Dutch translation of PitExplorer.
+# SPDX-License-Identifier: LGPL-2.1-or-later
+msgid ""
+msgstr ""
+"Project-Id-Version: pitexplorer\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/components/messages.ts
+msgid "\".\" and \"..\" are not allowed as a name."
+msgstr "\".\" en \"..\" zijn niet toegestaan als naam."
+
+#: src/components/FilesPage.tsx
+msgid "$0 at $1"
+msgstr "$0 om $1"
+
+#: src/components/messages.ts
+msgid "$0 contains a mounted file system and cannot be deleted."
+msgstr "$0 bevat een aangekoppeld bestandssysteem en kan niet worden verwijderd."
+
+#: src/components/FilesPage.tsx
+msgid "$0 file uploaded"
+msgid_plural "$0 files uploaded"
+msgstr[0] "$0 bestand geüpload"
+msgstr[1] "$0 bestanden geüpload"
+
+#: src/components/messages.ts
+msgid "$0 is protected and cannot be changed."
+msgstr "$0 is beschermd en kan niet worden gewijzigd."
+
+#: src/components/FilesPage.tsx
+msgid "$0 item in total"
+msgid_plural "$0 items in total"
+msgstr[0] "In totaal $0 item"
+msgstr[1] "In totaal $0 items"
+
+#: src/components/FilesPage.tsx
+msgid "$0 selected"
+msgid_plural "$0 selected"
+msgstr[0] "$0 geselecteerd"
+msgstr[1] "$0 geselecteerd"
+
+#: src/components/messages.ts
+msgid "$0: $1"
+msgstr "$0: $1"
+
+#: src/components/messages.ts
+msgid "A folder cannot be moved into itself: $0"
+msgstr "Een map kan niet in zichzelf worden verplaatst: $0"
+
+#: src/components/messages.ts
+msgid "A name cannot contain \"/\"."
+msgstr "Een naam mag geen \"/\" bevatten."
+
+#: src/components/messages.ts
+msgid "A name cannot contain a NUL character."
+msgstr "Een naam mag geen NUL-teken bevatten."
+
+#: src/components/messages.ts
+msgid "A name cannot contain control characters such as line breaks."
+msgstr "Een naam mag geen stuurtekens zoals regeleinden bevatten."
+
+#: src/components/dialogs.tsx
+msgid "Add"
+msgstr "Toevoegen"
+
+#: src/components/Sidebar.tsx src/components/dialogs.tsx
+msgid "Add location"
+msgstr "Locatie toevoegen"
+
+#: src/components/FilesPage.tsx
+msgid "Administrator"
+msgstr "Beheerder"
+
+#: src/components/messages.ts
+msgid "Already exists: $0"
+msgstr "Bestaat al: $0"
+
+#: src/components/dialogs.tsx
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: src/components/FilesPage.tsx
+msgid "Cannot list mounted file systems: $0"
+msgstr "Kan aangekoppelde bestandssystemen niet tonen: $0"
+
+#: src/components/FilesPage.tsx
+msgid "Cannot upload \"$0\": $1"
+msgstr "Kan \"$0\" niet uploaden: $1"
+
+#: src/components/FilesPage.tsx
+msgid "Create"
+msgstr "Aanmaken"
+
+#: src/components/FilesPage.tsx src/components/dialogs.tsx
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: src/components/dialogs.tsx
+msgid "Delete $0 item?"
+msgid_plural "Delete $0 items?"
+msgstr[0] "$0 item verwijderen?"
+msgstr[1] "$0 items verwijderen?"
+
+#: src/components/FilesPage.tsx
+msgid "Download"
+msgstr "Downloaden"
+
+#: src/components/dialogs.tsx src/components/messages.ts
+msgid "Enter a name."
+msgstr "Vul een naam in."
+
+#: src/components/dialogs.tsx
+msgid "Enter an absolute path, starting with \"/\"."
+msgstr "Vul een absoluut pad in dat begint met \"/\"."
+
+#: src/components/Sidebar.tsx src/components/dialogs.tsx src/index.html src/manifest.json
+msgid "Files"
+msgstr "Bestanden"
+
+#: src/components/FilesPage.tsx
+msgid "Folder contents"
+msgstr "Inhoud van de map"
+
+#: src/components/FilesPage.tsx
+msgid "Folder name"
+msgstr "Mapnaam"
+
+#: src/components/Sidebar.tsx
+msgid "Folders"
+msgstr "Mappen"
+
+#: src/components/FilesPage.tsx
+msgid "Grid view"
+msgstr "Rasterweergave"
+
+#: src/components/messages.ts
+msgid "Invalid name: $0"
+msgstr "Ongeldige naam: $0"
+
+#: src/components/FilesPage.tsx
+msgid "List view"
+msgstr "Lijstweergave"
+
+#: src/components/Sidebar.tsx src/components/dialogs.tsx
+msgid "Location"
+msgstr "Locatie"
+
+#: src/components/FilesPage.tsx
+msgid "Modified"
+msgstr "Gewijzigd"
+
+#: src/components/dialogs.tsx
+msgid "Move $0 item to…"
+msgid_plural "Move $0 items to…"
+msgstr[0] "$0 item verplaatsen naar…"
+msgstr[1] "$0 items verplaatsen naar…"
+
+#: src/components/dialogs.tsx
+msgid "Move here"
+msgstr "Hierheen verplaatsen"
+
+#: src/components/FilesPage.tsx
+msgid "Move to…"
+msgstr "Verplaatsen naar…"
+
+#: src/components/FilesPage.tsx src/components/dialogs.tsx
+msgid "Name"
+msgstr "Naam"
+
+#: src/components/FilesPage.tsx
+msgid "New folder"
+msgstr "Nieuwe map"
+
+#: src/components/FilesPage.tsx
+msgid "New name"
+msgstr "Nieuwe naam"
+
+#: src/components/dialogs.tsx
+msgid "No subfolders"
+msgstr "Geen submappen"
+
+#: src/components/messages.ts
+msgid "Not a folder: $0"
+msgstr "Geen map: $0"
+
+#: src/components/messages.ts
+msgid "Not found: $0"
+msgstr "Niet gevonden: $0"
+
+#: src/components/FilesPage.tsx
+msgid "Open as administrator"
+msgstr "Openen als beheerder"
+
+#: src/components/dialogs.tsx
+msgid "Parent folder"
+msgstr "Bovenliggende map"
+
+#: src/components/dialogs.tsx
+msgid "Path"
+msgstr "Pad"
+
+#: src/components/FilesPage.tsx
+msgid "Permission denied for $0 items"
+msgstr "Toegang geweigerd voor $0 items"
+
+#: src/components/messages.ts
+msgid "Permission denied: $0"
+msgstr "Toegang geweigerd: $0"
+
+#: src/components/Sidebar.tsx
+msgid "Remove $0"
+msgstr "$0 verwijderen"
+
+#: src/components/FilesPage.tsx
+msgid "Rename"
+msgstr "Hernoemen"
+
+#: src/components/dialogs.tsx
+msgid "Replace"
+msgstr "Vervangen"
+
+#: src/components/dialogs.tsx
+msgid "Replace existing file?"
+msgid_plural "Replace existing files?"
+msgstr[0] "Bestaand bestand vervangen?"
+msgstr[1] "Bestaande bestanden vervangen?"
+
+#: src/components/FilesPage.tsx
+msgid "Retry as administrator"
+msgstr "Opnieuw proberen als beheerder"
+
+#: src/components/FilesPage.tsx src/components/dialogs.tsx
+msgid "Root"
+msgstr "Root"
+
+#: src/components/FilesPage.tsx
+msgid "Select $0"
+msgstr "$0 selecteren"
+
+#: src/components/FilesPage.tsx
+msgid "Select all"
+msgstr "Alles selecteren"
+
+#: src/components/FilesPage.tsx
+msgid "Selected"
+msgstr "Geselecteerd"
+
+#: src/components/dialogs.tsx
+msgid "Show under"
+msgstr "Tonen onder"
+
+#: src/components/FilesPage.tsx
+msgid "Size"
+msgstr "Grootte"
+
+#: src/components/dialogs.tsx
+msgid "Skip these"
+msgstr "Deze overslaan"
+
+#: src/components/FilesPage.tsx
+msgid "Stop administrative access"
+msgstr "Beheerderstoegang stoppen"
+
+#: src/components/dialogs.tsx
+msgid "The following will be permanently deleted. This cannot be undone."
+msgstr "Het volgende wordt definitief verwijderd. Dit kan niet ongedaan worden gemaakt."
+
+#: src/components/messages.ts
+msgid "The name is too long."
+msgstr "De naam is te lang."
+
+#: src/components/dialogs.tsx
+msgid "These names already exist in this folder:"
+msgstr "Deze namen bestaan al in deze map:"
+
+#: src/components/FilesPage.tsx
+msgid "This folder is empty"
+msgstr "Deze map is leeg"
+
+#: src/components/FilesPage.tsx
+msgid "Turn on administrative access in Cockpit to open this folder."
+msgstr "Zet beheerderstoegang in Cockpit aan om deze map te openen."
+
+#: src/components/messages.ts
+msgid "Unknown error"
+msgstr "Onbekende fout"
+
+#: src/components/FilesPage.tsx
+msgid "Upload files"
+msgstr "Bestanden uploaden"
+
+#: src/components/FilesPage.tsx
+msgid "Upload or create"
+msgstr "Uploaden of aanmaken"
+
+#: src/components/FilesPage.tsx
+msgid "Uploading $0"
+msgstr "$0 uploaden"
+
+#: src/components/FilesPage.tsx
+msgid "View"
+msgstr "Weergave"
+
+#: src/components/FilesPage.tsx
+msgid "You can open this folder with administrative access."
+msgstr "Je kunt deze map openen met beheerderstoegang."
+
+#: src/components/dialogs.tsx
+msgid "counting items…"
+msgstr "items tellen…"
+
+#: src/components/dialogs.tsx
+msgid "file"
+msgstr "bestand"
+
+#: src/components/dialogs.tsx
+msgid "folder with $0 item"
+msgid_plural "folder with $0 items"
+msgstr[0] "map met $0 item"
+msgstr[1] "map met $0 items"

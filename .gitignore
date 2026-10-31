@@ -1,0 +1,15 @@
+# general patterns
+*.pyc
+__pycache__/
+
+# toplevel (/...)
+/dist/
+/metafile.json
+/node_modules/
+/pkg/
+/runtime-npm-modules.txt
+/tools/
+/tmp/
+
+# subdirs (/subdir/...)
+/test/common/

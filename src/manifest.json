@@ -1,0 +1,17 @@
+{
+    "requires": {
+        "cockpit": "314"
+    },
+
+    "menu": {
+        "index": {
+            "label": "Files",
+            "order": 7,
+            "keywords": [
+                {
+                    "matches": ["files", "folders", "browser", "explorer", "upload", "download", "pitexplorer"]
+                }
+            ]
+        }
+    }
+}
