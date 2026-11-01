@@ -103,7 +103,8 @@ temporary folder with the same argument arrays Cockpit would run, and check
 that invalid names are refused, protected paths are never touched and that
 no command uses a shell. `test/vm/` and `test/browser/` contain a browser
 test for a throwaway test VM (never a real server): `setup-vm.sh` prepares
-the VM, `run-test.sh` installs the build and runs `check_files.py`.
+the VM, `run-test.sh` installs the build and runs `check_files.py`;
+`check_coexist.py` checks PitExplorer next to another add-on (PitStore).
 
 Translations use Cockpit's gettext: the source strings are English, the Dutch
 translation is `po/nl.po`. A unit test checks that every string in `src/`
