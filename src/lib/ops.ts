@@ -46,7 +46,7 @@ export function classify(err: unknown, path: string): OpError {
     let code: OpErrorCode = 'other';
     if (e?.problem === 'access-denied' || /Permission denied|Operation not permitted|Read-only file system/.test(msg))
         code = 'denied';
-    else if (/No such file or directory/.test(msg))
+    else if (e?.problem === 'not-found' || /No such file or directory/.test(msg))
         code = 'not-found';
     else if (/File exists|not replacing|Directory not empty/.test(msg))
         code = 'exists';

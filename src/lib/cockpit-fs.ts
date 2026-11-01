@@ -136,7 +136,18 @@ export async function loadMounts(): Promise<Mount[]> {
 export function fileWriter(file: Blob, opts: RunOptions, progress?: (bytes: number) => void,
     signal?: AbortSignal): TempWriter {
     return async (tempPath: string) => {
-        await upload(tempPath, file, progress, signal, { tag: '-', ...su(opts) });
+        try {
+            await upload(tempPath, file, progress, signal, { tag: '-', ...su(opts) });
+        } catch (err) {
+            // the upload helper only passes on cockpit.message(problem); get the
+            // problem code back so that the error can be classified
+            const message = String((err as Error)?.message ?? err);
+            for (const problem of ['access-denied', 'not-found']) {
+                if (message === cockpit.message(problem))
+                    throw Object.assign(new Error(message), { problem });
+            }
+            throw err;
+        }
     };
 }
 

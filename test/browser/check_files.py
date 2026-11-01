@@ -24,7 +24,10 @@ from webdriver_bidi import ChromiumBidi  # noqa: E402
 
 BASE = os.environ.get("PITEXPLORER_TEST_BASE", "https://localhost:9090").rstrip("/")
 FRAME = "cockpit1:localhost/pitexplorer"
-DOCS = Path("/DATA/Documents")
+# an empty folder under /DATA; the test user owns it during the test
+DOCS = Path(os.environ.get("PE_TEST_DIR", "/DATA/Documents"))
+USER = os.environ.get("PE_USER", "pe-auto")
+ADMIN = os.environ.get("PE_ADMIN", "pe-auto-admin")
 OUT = Path(".")
 
 
@@ -160,7 +163,7 @@ async def upload(browser, path):
 
 
 async def user_session(browser):
-    await login(browser, "pe-user")
+    await login(browser, USER)
     menu_js = "() => [...document.querySelectorAll('#host-apps a, nav a')].map(a => a.textContent.trim()).join('|')"
     await wait(browser, f"() => ({menu_js})().split('|').includes('Bestanden')", timeout=30,
                what="'Bestanden' in the Cockpit menu")
@@ -187,10 +190,10 @@ async def user_session(browser):
     await shot(browser, "01-grid-data")
 
     # 2. navigate by tile and breadcrumb
-    await click(browser, ".pe-tile-main[title='Documents']")
-    await has_text(browser, ".pe-crumbs", "Documents")
+    await click(browser, f".pe-tile-main[title='{DOCS.name}']")
+    await has_text(browser, ".pe-crumbs", DOCS.name)
     await has_text(browser, ".pe-content", "Deze map is leeg")
-    ok("open folder by tile; breadcrumb Root > DATA > Documents; empty folder message")
+    ok(f"open folder by tile; breadcrumb Root > DATA > {DOCS.name}; empty folder message")
 
     # 3. new folder; invalid names are refused
     await click_text(browser, "Uploaden of aanmaken")
@@ -276,7 +279,7 @@ async def user_session(browser):
     await has_text(browser, ".pe-toolbar", "1 geselecteerd")
     await shot(browser, "05-list")
     await click_text(browser, "Verwijderen")
-    await has_text(browser, MODAL, "/DATA/Documents/hernoemd")
+    await has_text(browser, MODAL, f"{DOCS}/hernoemd")
     await has_text(browser, MODAL, "map met 1 item")
     await shot(browser, "06-delete-confirm")
     await click_text(browser, "Verwijderen", MODAL)
@@ -324,7 +327,7 @@ async def user_session(browser):
 
 
 async def admin_session(browser):
-    await login(browser, "pe-admin", admin=True)
+    await login(browser, ADMIN, admin=True)
     await open_page(browser, "/DATA/AppData")
     await click_text(browser, "Openen als beheerder")
     await wait(browser, "() => !!document.querySelector(\".pe-tile-main[title='config.txt']\")",
@@ -344,14 +347,42 @@ async def admin_session(browser):
     await wait_fs(lambda: Path("/DATA/als-beheerder").is_dir(), "created as administrator")
     if Path("/DATA/als-beheerder").stat().st_uid != 0:
         raise SystemExit("FAILED: not created by root")
-    subprocess.run(["sudo", "rmdir", "--", "/DATA/als-beheerder"], check=True)
     ok("admin: first try as the user is denied; 'Opnieuw proberen als beheerder' creates it as root")
+
+    # upload into that root-owned folder: denied as the user, retry as administrator
+    await click(browser, ".pe-tile-main[title='als-beheerder']")
+    await has_text(browser, ".pe-crumbs", "als-beheerder")
+    src = Path("/tmp/pe-upload/c")
+    src.mkdir(parents=True, exist_ok=True)
+    (src / "beheer.txt").write_text("root\n")
+    await upload(browser, src / "beheer.txt")
+    await has_text(browser, ".pf-v6-c-alert-group", "Toegang geweigerd: /DATA/als-beheerder/beheer.txt")
+    await has_text(browser, ".pf-v6-c-alert-group", "Opnieuw proberen als beheerder")
+    await shot(browser, "10-upload-denied")
+    await click_text(browser, "Opnieuw proberen als beheerder")
+    target = Path("/DATA/als-beheerder/beheer.txt")
+    await wait_fs(lambda: target.is_file() and target.read_text() == "root\n", "uploaded as administrator")
+    if target.stat().st_uid != 0 or any(p.name.endswith(".part") for p in target.parent.iterdir()):
+        raise SystemExit("FAILED: upload as administrator not owned by root, or temporary file left")
+    subprocess.run(["sudo", "rm", "-r", "--", "/DATA/als-beheerder"], check=True)
+    ok("admin: upload into a root folder is denied with a retry; the retry uploads as root")
 
 
 async def main(outdir):
     global OUT
     OUT = Path(outdir)
     OUT.mkdir(parents=True, exist_ok=True)
+    owner = subprocess.run(["stat", "-c", "%U:%G", "--", str(DOCS)], check=True, capture_output=True,
+                           text=True).stdout.strip()
+    subprocess.run(["sudo", "chown", f"{USER}:{USER}", "--", str(DOCS)], check=True)
+    try:
+        await sessions()
+    finally:
+        subprocess.run(["sudo", "chown", owner, "--", str(DOCS)], check=True)
+    print("ALL OK")
+
+
+async def sessions():
     for session in (user_session, admin_session):
         async with ChromiumBidi(headless=True) as browser:
             await browser.bidi("browsingContext.setViewport", context=browser.top_context,
@@ -360,7 +391,6 @@ async def main(outdir):
             errors = [str(m) for m in browser.logs if m.level == "error"]
             if errors:
                 raise SystemExit("FAILED: browser console errors:\n" + "\n".join(errors))
-    print("ALL OK")
 
 
 if __name__ == "__main__":

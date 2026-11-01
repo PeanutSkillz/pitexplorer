@@ -15,10 +15,12 @@ apt-get install -y -qq --no-install-recommends cockpit-ws cockpit-bridge cockpit
 systemctl enable --now cockpit.socket
 
 # login users; the random passwords are readable by root only
-#   pe-user   ordinary user
-#   pe-admin  may use Cockpit's administrative access (passwordless sudo,
-#             acceptable in a throwaway VM only)
-for u in pe-user pe-admin; do
+#   pe-user, pe-auto         ordinary users
+#   pe-admin, pe-auto-admin  may use Cockpit's administrative access
+#                            (passwordless sudo, acceptable in a throwaway VM only)
+# pe-user and pe-admin are for manual testing (their passwords may be changed);
+# the automated browser test logs in as pe-auto and pe-auto-admin.
+for u in pe-user pe-admin pe-auto pe-auto-admin; do
     if ! id "$u" >/dev/null 2>&1; then
         useradd -m -s /bin/bash "$u"
         (umask 077; openssl rand -hex 16 | tr -d '\n' > "/root/$u.pw")
@@ -27,10 +29,12 @@ for u in pe-user pe-admin; do
 done
 # copies for the browser test, which runs as the VM's default user
 install -d -m 0700 -o ubuntu -g ubuntu /home/ubuntu/pe-pw
-install -m 0600 -o ubuntu -g ubuntu /root/pe-user.pw /root/pe-admin.pw /home/ubuntu/pe-pw/
-usermod -aG sudo pe-admin
-echo 'pe-admin ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/pe-admin
-chmod 0440 /etc/sudoers.d/pe-admin
+install -m 0600 -o ubuntu -g ubuntu /root/pe-auto.pw /root/pe-auto-admin.pw /home/ubuntu/pe-pw/
+for u in pe-admin pe-auto-admin; do
+    usermod -aG sudo "$u"
+    echo "$u ALL=(ALL) NOPASSWD: ALL" > "/etc/sudoers.d/$u"
+    chmod 0440 "/etc/sudoers.d/$u"
+done
 
 # test data: /DATA like on a home server; AppData is root only
 mkdir -p /DATA/AppData /DATA/Documents /DATA/Downloads /DATA/Gallery /DATA/Media

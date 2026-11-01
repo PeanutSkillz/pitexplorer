@@ -11,7 +11,7 @@ import { tmpdir } from 'node:os';
 import QUnit from 'qunit';
 
 import {
-    countEntries, createFolder, deleteEntries, moveEntries, OpError, renameEntry, uploadFile,
+    classify, countEntries, createFolder, deleteEntries, moveEntries, OpError, renameEntry, uploadFile,
     type Runner,
 } from '../../src/lib/ops';
 
@@ -252,6 +252,17 @@ QUnit.module('upload', () => {
         assert.ok(err instanceof OpError);
         assert.deepEqual(readdirSync(dir), [], 'nothing is left behind');
         rmSync(dir, { recursive: true });
+    });
+});
+
+QUnit.module('errors', () => {
+    QUnit.test('classified from messages and Cockpit problem codes', assert => {
+        assert.equal(classify(new Error("mkdir: cannot create directory '/x': Permission denied"), '/x').code, 'denied');
+        assert.equal(classify({ problem: 'access-denied', message: 'Not permitted to perform this action.' }, '/x').code,
+                     'denied', 'upload channel refused (Cockpit problem code)');
+        assert.equal(classify({ problem: 'not-found', message: 'Not found' }, '/x').code, 'not-found');
+        assert.equal(classify(new Error("mv: not replacing '/x'"), '/x').code, 'exists');
+        assert.equal(classify(new Error('something else'), '/x').code, 'other');
     });
 });
 
