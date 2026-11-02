@@ -1,0 +1,23 @@
+Source: pitexplorer
+Section: admin
+Priority: optional
+Maintainer: PitExplorer Maintainers <webmaster@rcontentdesign.nl>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/PeanutSkillz/pitexplorer
+Vcs-Browser: https://github.com/PeanutSkillz/pitexplorer
+Vcs-Git: https://github.com/PeanutSkillz/pitexplorer.git
+
+Package: pitexplorer
+Architecture: all
+Depends: ${misc:Depends},
+         cockpit-bridge (>= 314),
+         cockpit-ws (>= 314),
+Description: file browser for Cockpit
+ PitExplorer adds a Files page to the Cockpit web console: shortcuts and
+ mounted file systems in a sidebar, grid and list views, and uploading,
+ downloading, renaming, moving and deleting files and folders.
+ .
+ All access goes through the Cockpit session with the rights of the
+ logged-in user. PitExplorer runs no daemon and opens no network port.

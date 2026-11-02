@@ -13,3 +13,11 @@ __pycache__/
 
 # subdirs (/subdir/...)
 /test/common/
+
+# Debian build output
+/debian/.debhelper/
+/debian/debhelper-build-stamp
+/debian/files
+/debian/pitexplorer/
+/debian/pitexplorer.substvars
+/debian/*.debhelper.log

@@ -54,7 +54,8 @@ clean:
 
 install: $(DIST_TEST) install-dist
 
-# install an already built dist/ without touching node or the network
+# install an already built dist/ without touching node or the network;
+# used by debian/rules
 install-dist:
 	test -f dist/manifest.json
 	mkdir -p $(DESTDIR)$(PREFIX)/share/cockpit/$(PACKAGE_NAME)
@@ -74,4 +75,12 @@ devel-uninstall:
 print-version:
 	@echo "$(VERSION)"
 
-.PHONY: all watch check clean install install-dist devel-install devel-uninstall print-version
+# build the binary .deb from a production dist/; output goes to ../
+deb: export NODE_ENV=production
+deb:
+	rm -rf dist/ $(DIST_TEST)
+	$(MAKE) $(DIST_TEST)
+	dpkg-buildpackage -b -us -uc
+	lintian --fail-on error,warning ../$(PACKAGE_NAME)_$(VERSION)_all.deb
+
+.PHONY: all watch check clean install install-dist devel-install devel-uninstall print-version deb

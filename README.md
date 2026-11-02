@@ -27,6 +27,41 @@ add-ons.
 * `findmnt` (util-linux) and GNU coreutils, which every supported
   distribution has
 
+## Installation (APT)
+
+PitExplorer is distributed as a signed APT repository for Debian and Ubuntu.
+
+```sh
+# 1. Add the repository signing key
+sudo install -d -m 0755 /etc/apt/keyrings
+curl -fsSL https://peanutskillz.github.io/pitexplorer/pitexplorer.asc \
+  | sudo tee /etc/apt/keyrings/pitexplorer.asc > /dev/null
+
+# 2. Add the repository
+echo "deb [signed-by=/etc/apt/keyrings/pitexplorer.asc] https://peanutskillz.github.io/pitexplorer stable main" \
+  | sudo tee /etc/apt/sources.list.d/pitexplorer.list
+
+# 3. Install
+sudo apt update
+sudo apt install pitexplorer
+```
+
+Before you trust the key, check its fingerprint with
+`gpg --show-keys /etc/apt/keyrings/pitexplorer.asc`. It must be
+
+    874A 088D 00AB 17B6 9C8A  95F1 52AD 7F66 3D48 3C81
+
+(also in the release notes and in `.github/pitexplorer.asc` of the repository).
+
+On Ubuntu 22.04 install a recent Cockpit from `jammy-backports` first:
+`sudo apt install -t jammy-backports cockpit`.
+
+Log in to Cockpit again afterwards; **Files** appears in the menu. Remove it
+with `sudo apt remove pitexplorer`.
+
+Every release on GitHub also has the `.deb`, an SBOM and signed checksums:
+`gpg --verify SHA256SUMS.asc SHA256SUMS && sha256sum -c SHA256SUMS`.
+
 ## Installation from source
 
 Building needs Node.js 20 or newer, npm, git and make.
@@ -93,6 +128,15 @@ open port. Everything runs through the Cockpit bridge of your login session.
 * Shortcuts are stored per user in `~/.config/pitexplorer/settings.json`
   (folder created with mode 0700); the view choice (grid/list) is kept in the
   browser.
+
+## Releases
+
+A signed tag `vX.Y.Z` (matching `package.json` and `debian/changelog`)
+starts `.github/workflows/release.yml`: it builds and checks the `.deb`,
+publishes it with an SBOM and signed checksums as a GitHub release, and
+updates the signed APT repository on GitHub Pages. Every push also builds
+the `.deb`, runs lintian and installs and removes it on Ubuntu 24.04 and
+22.04 (`.github/workflows/deb.yml`, `test/integration/check_install.py`).
 
 ## Development
 
