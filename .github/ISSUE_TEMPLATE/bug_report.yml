@@ -1,0 +1,47 @@
+name: Bug report
+description: Something does not work as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Security issues:** do not report them here. See SECURITY.md.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open Files
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: versions
+    attributes:
+      label: Versions
+      description: PitExplorer version or commit, output of `dpkg-query -W cockpit-ws cockpit-bridge` (or `rpm -q cockpit-ws cockpit-bridge`) and `cat /etc/os-release`
+      render: text
+    validations:
+      required: true
+  - type: dropdown
+    id: access
+    attributes:
+      label: Access
+      options:
+        - Limited access (my own user)
+        - Administrative access
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Browser console or error messages
+      description: Remove any passwords, file names or other private details first.
+      render: text

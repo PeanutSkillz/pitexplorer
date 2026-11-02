@@ -16,6 +16,10 @@ Cockpit is set to Dutch):
 It is a separate Cockpit package: install it alone or next to other Cockpit
 add-ons.
 
+![Files: /DATA in the grid view](docs/screenshots/files.png)
+
+> Source code, releases and issues: <https://github.com/PeanutSkillz/pitexplorer>.
+
 ## Requirements
 
 * Cockpit 314 or newer (`cockpit-ws` and `cockpit-bridge`); tested with
